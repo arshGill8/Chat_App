@@ -4,7 +4,7 @@ import { messageReceived, populateUsersList } from "../actions";
 const setupSocket = (dispatch, username) => {
 
 
-  const socket = new WebSocket("ws://localhost:5000") || new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
+  const socket = new WebSocket("ws://localhost:5000");
 
   // called when web socket connection is open
   socket.onopen = () => {
