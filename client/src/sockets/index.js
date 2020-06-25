@@ -2,7 +2,9 @@ import * as types from "../constants/ActionTypes";
 import { messageReceived, populateUsersList } from "../actions";
 
 const setupSocket = (dispatch, username) => {
-  const socket = new WebSocket("ws://localhost:5000");
+
+
+  const socket = new WebSocket("ws://localhost:5000") || new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
 
   // called when web socket connection is open
   socket.onopen = () => {

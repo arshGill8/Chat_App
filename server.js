@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder
