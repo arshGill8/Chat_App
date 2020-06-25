@@ -1,13 +1,27 @@
 const WebSocket = require("ws");
+const express = require("express");
+const path = require("path");
+const app = express();
+
 // create web socket server
-const wss = new WebSocket.Server({ port: 8989 });
+const port = process.env.PORT || 8989;
+const wss = new WebSocket.Server({ port });
+
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  });
+}
 
 // create array to hold users
 const users = [];
 
 // create broadcast function, sends data to all web socket clients besides self
 const broadcast = (data, ws) => {
-  wss.clients.forEach((client) => {
+  wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN && client !== ws) {
       client.send(JSON.stringify(data));
     }
@@ -15,13 +29,12 @@ const broadcast = (data, ws) => {
 };
 
 // on connection listen for add user/message events
-wss.on("connection", (ws) => {
+wss.on("connection", ws => {
   let index;
-  ws.on("message", (message) => {
+  ws.on("message", message => {
     const data = JSON.parse(message);
     switch (data.type) {
-      
-    case "ADD_USER": {
+      case "ADD_USER": {
         index = users.length;
         users.push({ name: data.name, id: index + 1 });
         ws.send(
@@ -68,4 +81,3 @@ wss.on("connection", (ws) => {
     );
   });
 });
-
