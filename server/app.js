@@ -1,6 +1,8 @@
 const WebSocket = require("ws");
-
+const express = require('express')
+const path = require('path')
 // create web socket server
+const app = express()
 const wss = new WebSocket.Server({ port: 8989 });
 
 // create array to hold users
@@ -69,3 +71,13 @@ wss.on("connection", (ws) => {
     );
   });
 });
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}

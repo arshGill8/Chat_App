@@ -17,6 +17,7 @@ const AddMessage = (props) => {
           input = node;
         }}
       />
+      <button>ENTER</button>
     </section>
   );
 };

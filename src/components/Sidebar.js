@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 
 const Sidebar = ({ users }) => (
   <aside id="sidebar" className="sidebar">
+    <h1 className='users-title'>USERS</h1>
     <ul>
       {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
+        <li className='users-name' key={user.id}>{user.name}</li>
       ))}
     </ul>
   </aside>
