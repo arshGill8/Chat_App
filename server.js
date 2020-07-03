@@ -1,28 +1,23 @@
-const WebSocket = require("ws");
 const express = require("express");
-const path = require("path");
+const WebSocket = require("ws");
+
 const app = express();
 
+const port = process.env.PORT || 5000;
 
-// Serve static assets if in production
+
+const wss = new WebSocket.Server({ port: port});
+
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
-
+  
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "/client", "build", "index.html"));
   });
 }
 
-
-const port = process.env.PORT || 5000;
-// create web socket server
-
-const wss = new WebSocket.Server({ port });
-
-// create array to hold users
 const users = [];
-
 // create broadcast function, sends data to all web socket clients besides self
 const broadcast = (data, ws) => {
   wss.clients.forEach(client => {
