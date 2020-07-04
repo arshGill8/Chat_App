@@ -3,7 +3,7 @@ import { messageReceived, populateUsersList } from "../actions";
 
 const setupSocket = (dispatch, username) => {
 
-  let HOST = location.origin.replace(/^http/, 'ws')
+  let HOST = window.location.origin.replace(/^http/, 'ws')
   const socket = new WebSocket(HOST);
 
   // called when web socket connection is open
