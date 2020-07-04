@@ -5,7 +5,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const wss = new WebSocket.Server({ PORT });
+const wss = new WebSocket.Server({ port: PORT });
 
 if (process.env.NODE_ENV === "production") {
   // Set static folder
