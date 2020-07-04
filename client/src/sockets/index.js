@@ -3,8 +3,8 @@ import { messageReceived, populateUsersList } from "../actions";
 
 const setupSocket = (dispatch, username) => {
 
-
-  const socket = new WebSocket("ws://localhost:5000");
+  let HOST = location.origin.replace(/^http/, 'ws')
+  const socket = new WebSocket(HOST);
 
   // called when web socket connection is open
   socket.onopen = () => {
